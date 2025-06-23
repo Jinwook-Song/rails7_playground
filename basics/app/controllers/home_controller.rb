@@ -18,4 +18,14 @@ class HomeController < ApplicationController
         message+= "<h1>Action name is #{params[:action]}</h1>"
         render html: message.html_safe
     end
+
+    def passdatatoviews
+        @message="Hello, World!"
+        @number=123
+        @array=[ 1, 2, 3, 4, 5 ]
+        @hash={ "name"=>"John", "age"=>30 }
+        @boolean=true
+        @nil=nil
+        render "passdatatoviews"
+    end
 end
