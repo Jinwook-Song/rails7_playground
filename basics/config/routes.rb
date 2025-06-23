@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   get "home" => "home#index"
   get "home/getquery" => "home#getquery"
   get "home/passdatatoviews" => "home#passdatatoviews"
+  get "home/showdatetimeinfo" => "home#showdatetimeinfo"
 end
