@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
   get "home" => "home#index"
+  get "home/getquery" => "home#getquery"
 end
