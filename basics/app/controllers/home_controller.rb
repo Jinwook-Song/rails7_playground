@@ -28,4 +28,11 @@ class HomeController < ApplicationController
         @nil=nil
         render "passdatatoviews"
     end
+
+    def showdatetimeinfo
+        @current_time=Time.now
+        @current_date=Date.today
+        @current_datetime=DateTime.now
+        render "showdatetimeinfo"
+    end
 end
