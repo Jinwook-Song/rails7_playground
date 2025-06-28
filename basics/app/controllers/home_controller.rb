@@ -35,4 +35,16 @@ class HomeController < ApplicationController
         @current_datetime=DateTime.now
         render "showdatetimeinfo"
     end
+
+    def conditional_rendering
+        @data={
+            'name'=>'Jinwook Song',
+            'isVisible'=>true,
+            'loggedIn'=>true,
+            'countryCode'=>'KR',
+            'workExperience'=>45,
+            'stateCode'=>nil
+        }
+        render "conditional_rendering"
+    end
 end
