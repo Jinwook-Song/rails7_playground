@@ -16,3 +16,25 @@
         <td><%= @data['stateCode'] %></td>
     </tr>
 </table>
+
+<% if @data['loggedIn'] %>
+  <div class="alert alert-success">
+    <p>환영합니다, <%= @data['name'] %>님! 이미 로그인되어 있습니다.</p>
+    <button class="btn btn-primary">로그아웃</button>
+  </div>
+<% else %>
+  <div class="alert alert-warning">
+    <h3>로그인 폼</h3>
+    <form>
+      <div class="mb-3">
+        <label for="email" class="form-label">이메일</label>
+        <input type="email" class="form-control" id="email" placeholder="이메일을 입력하세요">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">비밀번호</label>
+        <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+      </div>
+      <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+  </div>
+<% end %>
