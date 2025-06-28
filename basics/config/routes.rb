@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   get "home/passdatatoviews" => "home#passdatatoviews"
   get "home/showdatetimeinfo" => "home#showdatetimeinfo"
   get "home/conditional_rendering" => "home#conditional_rendering"
+  get "home/loop_array" => "home#loop_array"
 end
