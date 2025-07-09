@@ -46,6 +46,20 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  # 로그 설정을 정의합니다.
+  # 로거를 표준 출력(콘솔)으로 설정합니다.
+  config.logger = Logger.new(STDOUT)
+  # 로그 파일 출력 설정
+  config.logger = ActiveSupport::Logger.new("log/my_app.log")
+  # 로그 레벨을 'warn'으로 설정하여 'warn', 'error', 'fatal' 메시지만 표시되도록 합니다.
+  config.log_level = :warn
+  # 로그 메시지에 표시될 날짜/시간 형식을 지정합니다.
+  config.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+  # 로그 메시지의 출력 형식을 사용자 정의합니다.
+  config.logger.formatter = proc do |severity, datetime, progname, msg|
+    "[#{datetime.strftime("%Y-%m-%d %H:%M:%S")}] #{severity}: #{msg}\n"
+  end
+
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
