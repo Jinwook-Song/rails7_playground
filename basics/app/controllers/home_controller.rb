@@ -50,6 +50,8 @@ class HomeController < ApplicationController
 
     def loop_array
         @fruits = ['사과', '바나나', '오렌지', '딸기', '포도']
+        # console
+        # debugger
         @users = [
             { 'name' => '김철수', 'age' => 25, 'email' => 'kim@example.com' },
             { 'name' => '이영희', 'age' => 30, 'email' => 'lee@example.com' },
