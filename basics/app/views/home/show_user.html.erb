@@ -9,9 +9,22 @@
     <h3>Address:</h3>
     <p><%= @user["address"]["street"] %>, <%= @user["address"]["number"] %></p>
     <p><%= @user["address"]["city"] %>, <%= @user["address"]["zipcode"] %></p>
-    <p><span>Geolocation:</span> Lat: <%= @user["address"]["geolocation"]["lat"] %>, Long: <%= @user["address"]["geolocation"]["long"] %></p>
+
+    <div>
+        <input type="checkbox" id="toggleGeolocation" checked>
+        <label for="toggleGeolocation">Show Geolocation</label>
+    </div>
+
+    <div id="geolocationInfo">
+        <p><span>Geolocation:</span> Lat: <%= @user["address"]["geolocation"]["lat"] %>, Long: <%= @user["address"]["geolocation"]["long"] %></p>
+    </div>
+
     <p><a href="javascript:history.back()">Back to User List</a></p>
     <% else %>
     <p>사용자 정보를 불러오지 못했습니다.</p>
     <% end %>
 </div>
+
+<script>
+    console.log("show_user.html.erb loaded");
+</script>
