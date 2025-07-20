@@ -1,0 +1,39 @@
+<h1>Users from FakeStoreAPI</h1>
+
+<style>
+    .user-card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .user-card h3 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .user-card p {
+        margin: 5px 0;
+    }
+
+    .user-card span {
+        font-weight: bold;
+    }
+</style>
+
+<% if @users_from_api %>
+<% @users_from_api.each do |user| %>
+<div class="user-card">
+    <h3><%= user["name"]["firstname"] %> <%= user["name"]["lastname"] %></h3>
+    <p><span>ID:</span> <%= user["id"] %></p>
+    <p><span>Username:</span> <%= user["username"] %></p>
+    <p><span>Email:</span> <%= user["email"] %></p>
+    <p><span>Phone:</span> <%= user["phone"] %></p>
+    <p><span>Address:</span> <%= user["address"]["street"] %>, <%= user["address"]["number"] %>, <%= user["address"]["city"] %>, <%= user["address"]["zipcode"] %></p>
+</div>
+<% end %>
+<% else %>
+<p>사용자 데이터를 불러오지 못했습니다.</p>
+<% end %>

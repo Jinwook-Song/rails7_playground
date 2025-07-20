@@ -38,27 +38,33 @@ class HomeController < ApplicationController
 
     def conditional_rendering
         @data={
-            'name'=>'Jinwook Song',
-            'isVisible'=>true,
-            'loggedIn'=>true,
-            'countryCode'=>'KR',
-            'workExperience'=>45,
-            'stateCode'=>nil
+            "name"=>"Jinwook Song",
+            "isVisible"=>true,
+            "loggedIn"=>true,
+            "countryCode"=>"KR",
+            "workExperience"=>45,
+            "stateCode"=>nil
         }
         render "conditional_rendering"
     end
 
     def loop_array
-        @fruits = ['사과', '바나나', '오렌지', '딸기', '포도']
+        @fruits = [ "사과", "바나나", "오렌지", "딸기", "포도" ]
         # console
         # debugger
         @users = [
-            { 'name' => '김철수', 'age' => 25, 'email' => 'kim@example.com' },
-            { 'name' => '이영희', 'age' => 30, 'email' => 'lee@example.com' },
-            { 'name' => '박지민', 'age' => 22, 'email' => 'park@example.com' },
-            { 'name' => '정민수', 'age' => 28, 'email' => 'jung@example.com' }
+            { "name" => "김철수", "age" => 25, "email" => "kim@example.com" },
+            { "name" => "이영희", "age" => 30, "email" => "lee@example.com" },
+            { "name" => "박지민", "age" => 22, "email" => "park@example.com" },
+            { "name" => "정민수", "age" => 28, "email" => "jung@example.com" }
         ]
         @counter = 10
         render "loop_array"
+    end
+
+    def fetch_users
+        response = HTTParty.get("https://fakestoreapi.com/users")
+        @users_from_api = JSON.parse(response.body) if response.success?
+        render "fetch_users"
     end
 end
