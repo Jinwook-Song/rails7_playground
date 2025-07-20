@@ -1,0 +1,17 @@
+<div class="user-detail-card">
+    <% if @user %>
+    <h1><%= @user["name"]["firstname"] %> <%= @user["name"]["lastname"] %></h1>
+    <img src="https://i.pravatar.cc/150?img=<%= @user["id"] %>" alt="User Avatar" class="user-avatar-large">
+    <p><span>ID:</span> <%= @user["id"] %></p>
+    <p><span>Username:</span> <%= @user["username"] %></p>
+    <p><span>Email:</span> <%= @user["email"] %></p>
+    <p><span>Phone:</span> <%= @user["phone"] %></p>
+    <h3>Address:</h3>
+    <p><%= @user["address"]["street"] %>, <%= @user["address"]["number"] %></p>
+    <p><%= @user["address"]["city"] %>, <%= @user["address"]["zipcode"] %></p>
+    <p><span>Geolocation:</span> Lat: <%= @user["address"]["geolocation"]["lat"] %>, Long: <%= @user["address"]["geolocation"]["long"] %></p>
+    <p><a href="javascript:history.back()">Back to User List</a></p>
+    <% else %>
+    <p>사용자 정보를 불러오지 못했습니다.</p>
+    <% end %>
+</div>

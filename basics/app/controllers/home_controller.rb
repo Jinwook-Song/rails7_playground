@@ -67,4 +67,11 @@ class HomeController < ApplicationController
         @users_from_api = JSON.parse(response.body) if response.success?
         render "fetch_users"
     end
+
+    def show_user
+        user_id = params[:id]
+        response = HTTParty.get("https://fakestoreapi.com/users/#{user_id}")
+        @user = JSON.parse(response.body) if response.success?
+        render "show_user"
+    end
 end

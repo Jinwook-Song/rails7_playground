@@ -3,7 +3,7 @@
 <% if @users_from_api %>
 <% @users_from_api.each do |user| %>
 <div class="user-card">
-    <h3><img src="https://i.pravatar.cc/150?img=<%= user["id"] %>" alt="User Avatar" class="user-avatar"> <%= user["name"]["firstname"] %> <%= user["name"]["lastname"] %></h3>
+    <h3><img src="https://i.pravatar.cc/150?img=<%= user["id"] %>" alt="User Avatar" class="user-avatar"> <a href="<%= user_detail_path(user["id"]) %>"><%= user["name"]["firstname"] %> <%= user["name"]["lastname"] %></a></h3>
     <p><span>ID:</span> <%= user["id"] %></p>
     <p><span>Username:</span> <%= user["username"] %></p>
     <p><span>Email:</span> <%= user["email"] %></p>

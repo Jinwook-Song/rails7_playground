@@ -18,4 +18,5 @@ Rails.application.routes.draw do
   get "home/conditional_rendering" => "home#conditional_rendering"
   get "home/loop_array" => "home#loop_array"
   get "home/fetch_users" => "home#fetch_users"
+  get "home/users/:id" => "home#show_user", as: :user_detail
 end
