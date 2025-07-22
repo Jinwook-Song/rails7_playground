@@ -17,9 +17,11 @@
             <td><%= employee.email %></td>
             <td><%= employee.notes %></td>
             <td><%= link_to 'Show', employee %></td>
+            <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
         </tr>
         <% end %>
     </tbody>
 </table>
 
+<%= link_to "New employee", new_employee_path %>
 <br>
