@@ -9,4 +9,5 @@
 <p><strong>Gender:</strong> <%= @employee.gender %></p>
 
 <%= link_to 'Edit this employee', edit_employee_path(@employee) %> |
+<%= link_to 'Delete this employee', @employee, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', employees_path %>

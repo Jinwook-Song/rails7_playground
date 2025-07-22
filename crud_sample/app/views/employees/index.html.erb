@@ -18,6 +18,7 @@
             <td><%= employee.notes %></td>
             <td><%= link_to 'Show', employee %></td>
             <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+            <td><%= link_to 'Delete', employee, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
     </tbody>

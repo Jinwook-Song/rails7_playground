@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: %i[ show edit update ]
+  before_action :set_employee, only: %i[ show edit update destroy ]
 
   def index
     @employees = Employee.all
@@ -31,6 +31,11 @@ class EmployeesController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @employee.destroy
+    redirect_to employees_url, notice: "Employee was successfully destroyed.", status: :see_other
   end
 
   private
