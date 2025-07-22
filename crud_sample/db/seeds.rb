@@ -7,3 +7,22 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+puts "Creating 5 dummy employees..."
+
+5.times do |i|
+  Employee.create!(
+    firstname: Faker::Name.first_name,
+    lastname: Faker::Name.last_name,
+    email: Faker::Internet.unique.email,
+    phone: Faker::PhoneNumber.phone_number,
+    has_passport: [ true, false ].sample,
+    salary: Faker::Number.between(from: 30000, to: 100000),
+    notes: Faker::Lorem.sentence(word_count: 5),
+    birth_date: Faker::Date.birthday(min_age: 18, max_age: 65),
+    hire_date: Faker::Date.backward(days: 365 * 10),
+    gender: [ "Male", "Female", "Other" ].sample
+  )
+end
+
+puts "Dummy employees created!"
