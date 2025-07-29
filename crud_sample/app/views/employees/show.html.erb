@@ -1,3 +1,9 @@
+<!-- 💎 Rails 8 Turbo 캐싱 설정 -->
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="max-age=300">
+  <meta name="turbo-prefetch" content="true">
+<% end %>
+
 <p><strong>Name:</strong> <%= @employee.firstname %> <%= @employee.lastname %></p>
 <p><strong>Email:</strong> <%= @employee.email %></p>
 <p><strong>Phone:</strong> <%= @employee.phone %></p>
@@ -8,6 +14,84 @@
 <p><strong>Hire Date:</strong> <%= @employee.hire_date %></p>
 <p><strong>Gender:</strong> <%= @employee.gender %></p>
 
-<%= link_to 'Edit this employee', edit_employee_path(@employee) %> |
-<%= link_to 'Delete this employee', @employee, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', employees_path %>
+<hr>
+
+<h3>Posts by <%= @employee.firstname %> <%= @employee.lastname %></h3>
+
+<!-- Skeleton Loading과 비동기 Posts 로드 -->
+<div id="posts-container">
+  <!-- 스켈레톤 로딩 상태 -->
+  <div class="skeleton-loading">
+    <p style="color: #666; font-style: italic;">포스트를 불러오는 중...</p>
+    <div style="margin: 10px 0;">
+      <div class="skeleton-line" style="height: 20px; background: #f0f0f0; margin: 5px 0; border-radius: 4px; animation: pulse 1.5s ease-in-out infinite;"></div>
+      <div class="skeleton-line" style="height: 15px; background: #f0f0f0; margin: 5px 0; border-radius: 4px; width: 80%; animation: pulse 1.5s ease-in-out infinite;"></div>
+      <div class="skeleton-line" style="height: 40px; background: #f0f0f0; margin: 10px 0; border-radius: 4px; animation: pulse 1.5s ease-in-out infinite;"></div>
+    </div>
+    <div style="margin: 10px 0;">
+      <div class="skeleton-line" style="height: 20px; background: #f0f0f0; margin: 5px 0; border-radius: 4px; animation: pulse 1.5s ease-in-out infinite;"></div>
+      <div class="skeleton-line" style="height: 15px; background: #f0f0f0; margin: 5px 0; border-radius: 4px; width: 70%; animation: pulse 1.5s ease-in-out infinite;"></div>
+      <div class="skeleton-line" style="height: 40px; background: #f0f0f0; margin: 10px 0; border-radius: 4px; animation: pulse 1.5s ease-in-out infinite;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 💎 Turbo Frame with caching -->
+<%= turbo_frame_tag "employee-posts", 
+    src: posts_employee_path(@employee), 
+    loading: :lazy,
+    data: { 
+      turbo_cache: "true",
+      turbo_cache_key: "employee-#{@employee.id}-posts-#{@employee.updated_at.to_i}"
+    } do %>
+  <!-- 로딩 중에는 위의 skeleton이 표시됨 -->
+<% end %>
+
+<hr>
+
+<!-- 💎 Turbo Prefetch 링크들 -->
+<%= link_to 'Edit this employee', edit_employee_path(@employee), 
+    data: { turbo_prefetch: true } %> |
+<%= link_to 'Delete this employee', @employee, 
+    data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', employees_path, 
+    data: { turbo_prefetch: true } %>
+
+<style>
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* 💎 Turbo 로딩 상태 스타일 */
+turbo-frame[loading] {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+</style>
+
+<script>
+// 💎 Rails 8 Turbo 향상된 이벤트 처리
+document.addEventListener('turbo:frame-load', function(event) {
+  if (event.target.id === 'employee-posts') {
+    const skeleton = document.querySelector('.skeleton-loading');
+    if (skeleton) {
+      skeleton.style.display = 'none';
+    }
+    
+    // 캐시 상태 로깅
+    const cacheKey = event.target.dataset.turboCacheKey;
+    console.log(`✅ Posts 로드 완료 - Cache Key: ${cacheKey}`);
+  }
+});
+
+// Turbo 캐시 히트 감지
+document.addEventListener('turbo:before-cache', function() {
+  console.log('💾 페이지가 Turbo 캐시에 저장됨');
+});
+
+document.addEventListener('turbo:load', function() {
+  console.log('🚀 페이지 로드 (캐시 또는 서버)');
+});
+</script>

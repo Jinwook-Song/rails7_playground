@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "employee-posts" do %>
+  <% if posts.any? %>
+    <div class="posts">
+      <% posts.each do |post| %>
+        <div style="border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px;">
+          <h4><%= post.title %></h4>
+          <p style="color: #666; font-size: 0.9em;">
+            작성일: <%= post.created_at.strftime("%Y년 %m월 %d일 %H:%M") %>
+          </p>
+          <div style="margin-top: 10px;">
+            <%= simple_format(post.content) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p style="color: #666; font-style: italic;">이 직원이 작성한 포스트가 없습니다.</p>
+  <% end %>
+<% end %> 

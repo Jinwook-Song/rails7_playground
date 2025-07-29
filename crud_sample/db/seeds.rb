@@ -10,8 +10,9 @@
 
 puts "Creating 5 dummy employees..."
 
+employees = []
 5.times do |i|
-  Employee.create!(
+  employee = Employee.create!(
     firstname: Faker::Name.first_name,
     lastname: Faker::Name.last_name,
     email: Faker::Internet.unique.email,
@@ -23,6 +24,23 @@ puts "Creating 5 dummy employees..."
     hire_date: Faker::Date.backward(days: 365 * 10),
     gender: [ "Male", "Female", "Other" ].sample
   )
+  employees << employee
 end
 
 puts "Dummy employees created!"
+
+puts "Creating posts for employees..."
+
+employees.each do |employee|
+  # 각 직원마다 1~5개의 랜덤한 포스트 생성
+  rand(1..5).times do
+    employee.posts.create!(
+      title: Faker::Lorem.sentence(word_count: rand(3..8)),
+      content: Faker::Lorem.paragraphs(number: rand(1..4)).join("\n\n")
+    )
+  end
+end
+
+puts "Posts created for all employees!"
+puts "Total employees: #{Employee.count}"
+puts "Total posts: #{Post.count}"

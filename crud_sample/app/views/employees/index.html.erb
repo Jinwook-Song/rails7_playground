@@ -1,3 +1,9 @@
+<!-- 💎 Rails 8 Turbo 캐싱 설정 -->
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="max-age=300">
+  <meta name="turbo-prefetch" content="true">
+<% end %>
+
 <h1>Employees</h1>
 
 <table>
@@ -15,14 +21,56 @@
         <tr>
             <td><%= employee.firstname %> <%= employee.lastname %></td>
             <td><%= employee.email %></td>
-            <td><%= employee.notes %></td>
-            <td><%= link_to 'Show', employee %></td>
-            <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+            <!-- 💎 ActionText 올바른 처리 -->
+            <td><%= truncate(employee.notes.to_plain_text, length: 50) if employee.notes.present? %></td>
+            <!-- 💎 Turbo Prefetch로 빠른 로딩 -->
+            <td><%= link_to 'Show', employee, data: { turbo_prefetch: true } %></td>
+            <td><%= link_to 'Edit', edit_employee_path(employee), data: { turbo_prefetch: true } %></td>
             <td><%= link_to 'Delete', employee, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
         </tr>
         <% end %>
     </tbody>
 </table>
 
-<%= link_to "New employee", new_employee_path %>
-<br>
+<%= link_to "New employee", new_employee_path, data: { turbo_prefetch: true } %>
+
+<style>
+/* 💎 Turbo 로딩 향상 스타일 */
+a[data-turbo-prefetch="true"]:hover {
+  text-decoration: underline;
+  color: #0066cc;
+  transition: color 0.2s ease;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+</style>
+
+<script>
+// 💎 Prefetch 상태 로깅
+document.addEventListener('turbo:before-prefetch', function(event) {
+  console.log('🔄 Prefetch 시작:', event.target.href);
+});
+
+document.addEventListener('turbo:load', function() {
+  console.log('📋 Employee 목록 로드 완료');
+});
+</script>
