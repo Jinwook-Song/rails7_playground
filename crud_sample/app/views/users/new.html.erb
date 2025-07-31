@@ -1,0 +1,51 @@
+<%# app/views/users/new.html.erb %>
+
+<h1>회원가입</h1>
+
+<%= form_with(model: @user, url: signup_path, local: true) do |form|
+%> <% if @user.errors.any? %>
+<div id="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %>로 인해 저장할 수 없습니다:</h2>
+
+    <ul>
+        <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+    </ul>
+</div>
+<% end %>
+
+<div class="field">
+    <%= form.label :username %><br>
+    <%= form.text_field :username %>
+</div>
+
+<div class="field">
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+</div>
+
+<div class="field">
+    <%= form.label :first_name %><br>
+    <%= form.text_field :first_name %>
+</div>
+
+<div class="field">
+    <%= form.label :last_name %><br>
+    <%= form.text_field :last_name %>
+</div>
+
+<div class="field">
+    <%= form.label :password %><br>
+    <%= form.password_field :password %>
+</div>
+
+<div class="field">
+    <%= form.label :password_confirmation %><br>
+    <%= form.password_field :password_confirmation %>
+</div>
+
+<div class="actions">
+    <%= form.submit "회원가입" %>
+</div>
+<% end %>

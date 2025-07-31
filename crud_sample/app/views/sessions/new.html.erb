@@ -1,0 +1,20 @@
+<%# app/views/sessions/new.html.erb %>
+
+<h1>로그인</h1>
+
+<%= form_with(url: login_path, local: true) do |form|
+%>
+<div class="field">
+    <%= form.label :email %><br>
+    <%= form.email_field :email %>
+</div>
+
+<div class="field">
+    <%= form.label :password %><br>
+    <%= form.password_field :password %>
+</div>
+
+<div class="actions">
+    <%= form.submit "로그인" %>
+</div>
+<% end %>
